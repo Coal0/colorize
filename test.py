@@ -1,4 +1,4 @@
-from colorize import color_print
+from colorize import print_color
 
-color_print("The Knights who say Ni!", format="bold",
+print_color("The Knights who say Ni!", format="bold",
             foreground="white", background="green")
