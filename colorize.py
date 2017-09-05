@@ -96,7 +96,3 @@ def color_print(*print_args, format=None, foreground=None,
     print(*print_args, **print_kwargs, end='')
     print(ansi_escape_seq_end, end='')
     print()
-
-
-if __name__ == '__main__':
-    color_print(input(), format='bold', foreground='green')
