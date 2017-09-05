@@ -8,7 +8,7 @@ It allows you to change the foreground and background color of text in addition
 to its format (bold, underscore, or reverse_video).
 
 There are 3 required keyword arguments that must be supplied that default to
-`None` when missing. These keyword arguments are `format`, `foreground`, or
+`None` when missing. These keyword arguments are `format`, `foreground`, and
 `background`.
 
 A simple call works like this:
