@@ -8,8 +8,7 @@ the background color.
 By: Asad Moosvi
 """
 
-
-def color_print(*print_args, format=None, foreground=None,
+def print_color(*print_args, format=None, foreground=None,
         background=None, **print_kwargs):
     """A wrapper around the print function used for printing with different
     format, foreground, and background options.
@@ -31,7 +30,7 @@ def color_print(*print_args, format=None, foreground=None,
         The available options are the same as foreground color.
 
     Example usecase:
-        color_print('hello world', format='bold', foreground='green')
+        print_color('hello world', format='bold', foreground='green')
         This prints `hello world` in bold and green foreground color.
     """
 
