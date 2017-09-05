@@ -94,7 +94,6 @@ def print_color(*print_args, format=None, foreground=None,
     all_strings = [str(s) for s in print_args]
 
     if 'sep' in print_kwargs:
-        print('sep => {}'.format(print_kwargs['sep']))
         print_string = print_kwargs['sep'].join(all_strings)
     else:
         print_string = ' '.join(all_strings)
