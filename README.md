@@ -11,6 +11,12 @@ There are 3 required keyword arguments that must be supplied that default to
 `None` when missing. These keyword arguments are `format`, `foreground`, and
 `background`.
 
+Available values for `format` are: `bold`, `underscore`, or `reverse_video`.
+The `reverse_video` option reverses the foreground and background colors.
+
+Available background and forground colors: black, red, green, yellow, blue, magenta, 
+cyan, and white. Any other value will raise an error.
+
 A simple call works like this:
 
 ```python
