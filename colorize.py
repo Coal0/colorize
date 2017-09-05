@@ -99,6 +99,7 @@ def print_color(*print_args, format=None, foreground=None,
 
     if 'sep' in print_kwargs:
         print_string = print_kwargs['sep'].join(all_strings)
+        del print_kwargs['sep'] # remove sep after joining args
     else:
         print_string = ' '.join(all_strings)
 
