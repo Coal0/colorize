@@ -94,4 +94,4 @@ def print_color(*print_args, format=None, foreground=None,
     print(ansi_escape_seq, end='')
     print(*print_args, **print_kwargs, end='')
     print(ansi_escape_seq_end, end='')
-    print()
+    
