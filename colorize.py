@@ -91,7 +91,12 @@ def print_color(*print_args, format=None, foreground=None,
     ansi_escape_seq = ansi_escape_seq.format(format_codes=format_codes)
     ansi_escape_seq_end = "\033[0m"
 
-    print(ansi_escape_seq, end='')
-    print(*print_args, **print_kwargs, end='')
-    print(ansi_escape_seq_end, end='')
-    
+    all_strings = [str(s) for s in print_args]
+
+    if 'sep' in print_kwargs:
+        print('sep => {}'.format(print_kwargs['sep']))
+        print_string = print_kwargs['sep'].join(all_strings)
+    else:
+        print_string = ' '.join(all_strings)
+
+    print(ansi_escape_seq + print_string + ansi_escape_seq_end, **print_kwargs)
