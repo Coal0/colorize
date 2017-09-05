@@ -4,7 +4,7 @@
 
 This module consists of one function called `print_color()` that allows
 you to print something in a different format or color in Python.
-It allows you to change to foreground and background color of text in addition
+It allows you to change the foreground and background color of text in addition
 to its format (bold, underscore, reverse_video)
 
 There are 3 required keyword arguments that must be supplied that default to
