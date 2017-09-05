@@ -2,7 +2,7 @@
 
 ### Python printing in color made simple.
 
-This module consists of one function called `print_color()` that allows
+This module consists of one function called `color_print()` that allows
 you to print something in a different format or color in Python.
 It allows you to change to foreground and background color of text in addition
 to its format (bold, underscore, reverse_video)
