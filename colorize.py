@@ -81,7 +81,7 @@ def print_color(*print_args, format=None, foreground=None,
             'red': ';41',
             'green': ';42',
             'yellow': ';43',
-            'blue': '44',
+            'blue': ';44',
             'magenta': ';45',
             'cyan': ';46',
             'white': ';47'
@@ -94,7 +94,6 @@ def print_color(*print_args, format=None, foreground=None,
 
     ansi_escape_seq = ansi_escape_seq.format(format_codes=format_codes)
     ansi_escape_seq_end = "\033[0m"
-
     all_strings = [str(s) for s in print_args]
 
     if 'sep' in print_kwargs:
