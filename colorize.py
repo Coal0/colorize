@@ -1,6 +1,6 @@
 """
 Provides a simple wrapper function of print that allows
-you to print in a different format.
+you to print in a different format and color.
 
 You can change the attribute, the foreground color, and
 the background color of text when printing.
