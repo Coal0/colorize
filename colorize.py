@@ -1,9 +1,9 @@
 """
 Provides a simple wrapper function of print that allows
-you to print with a different format.
+you to print in a different format.
 
 You can change the attribute, the foreground color, and
-the background color.
+the background color of text when printing.
 
 By: Asad Moosvi
 """
