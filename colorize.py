@@ -49,7 +49,7 @@ def print_color(*print_args, format=None, foreground=None,
         elif format == 'reverse_video':
             format_codes += '7'
         else:
-            format_codes += '0'
+            raise ValueError('invalid format {!r}'.format(format))
 
     # set foreground if any supplied
     if foreground:
@@ -67,6 +67,8 @@ def print_color(*print_args, format=None, foreground=None,
 
         if foreground in foreground_codes:
             format_codes += foreground_codes[foreground]
+        else:
+            raise ValueError('invalid foreground color {!r}'.format(foreground))
 
     # set background if any supplied
     if background:
@@ -87,6 +89,8 @@ def print_color(*print_args, format=None, foreground=None,
 
         if background in background_codes:
             format_codes += background_codes[background]
+        else:
+            raise ValueError('invalid background color {!r}'.format(background))
 
     ansi_escape_seq = ansi_escape_seq.format(format_codes=format_codes)
     ansi_escape_seq_end = "\033[0m"
