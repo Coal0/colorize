@@ -91,7 +91,7 @@ def print_color(*print_args, format=None, foreground=None,
         else:
             raise ValueError('invalid background color {!r}'.format(background))
     else:
-        format_codes += ';49'
+        format_codes += ';49' # default background
 
     ansi_escape_seq = ansi_escape_seq.format(format_codes=format_codes)
     ansi_escape_seq_end = "\033[0m"
