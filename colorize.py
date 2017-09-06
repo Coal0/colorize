@@ -69,12 +69,11 @@ def print_color(*print_args, format=None, foreground=None,
             format_codes += foreground_codes[foreground]
         else:
             raise ValueError('invalid foreground color {!r}'.format(foreground))
+    else:
+        format_codes += ';39' # default foreground
 
     # set background if any supplied
     if background:
-        if not foreground:
-            format_codes += ';'
-
         background = background.strip().lower()
         background_codes = {
             'black': ';40',
@@ -91,8 +90,11 @@ def print_color(*print_args, format=None, foreground=None,
             format_codes += background_codes[background]
         else:
             raise ValueError('invalid background color {!r}'.format(background))
+    else:
+        format_codes += ';49'
 
     ansi_escape_seq = ansi_escape_seq.format(format_codes=format_codes)
+    print(repr(ansi_escape_seq))
     ansi_escape_seq_end = "\033[0m"
     all_strings = [str(s) for s in print_args]
 
