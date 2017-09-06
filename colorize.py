@@ -8,6 +8,8 @@ the background color of text when printing.
 By: Asad Moosvi
 """
 
+import argparse
+
 def print_color(*print_args, format=None, foreground=None,
         background=None, **print_kwargs):
     """A wrapper around the print function used for printing with different
@@ -104,3 +106,16 @@ def print_color(*print_args, format=None, foreground=None,
         print_string = ' '.join(all_strings)
 
     print(ansi_escape_seq + print_string + ansi_escape_seq_end, **print_kwargs)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='format and color text '
+                                                 'read from stdin')
+    parser.add_argument('-fg', '--foreground')
+    parser.add_argument('-bg', '--background')
+    parser.add_argument('-fmt', '--format')
+
+    args = parser.parse_args()
+    user_input = input()
+    print_color(user_input, format=args.format,
+                foreground=args.foreground,
+                background=args.background)
