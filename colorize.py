@@ -94,7 +94,6 @@ def print_color(*print_args, format=None, foreground=None,
         format_codes += ';49'
 
     ansi_escape_seq = ansi_escape_seq.format(format_codes=format_codes)
-    print(repr(ansi_escape_seq))
     ansi_escape_seq_end = "\033[0m"
     all_strings = [str(s) for s in print_args]
 
