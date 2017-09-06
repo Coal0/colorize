@@ -9,6 +9,7 @@ By: Asad Moosvi
 """
 
 import argparse
+import sys
 
 def print_color(*print_args, format=None, foreground=None,
         background=None, **print_kwargs):
@@ -115,7 +116,7 @@ if __name__ == '__main__':
     parser.add_argument('-fmt', '--format')
 
     args = parser.parse_args()
-    user_input = input()
+    user_input = sys.stdin.read().rstrip()
     print_color(user_input, format=args.format,
                 foreground=args.foreground,
                 background=args.background)
