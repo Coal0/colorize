@@ -7,4 +7,4 @@ colors = [
 
 for fg in colors:
     for bg in colors:
-        print_color("The Knights who say Ni!", foreground=fg, background=bg, format='bold')
+        print_color("{} text on {} background".format(fg, bg), foreground=fg, background=bg, format='bold')
