@@ -7,6 +7,9 @@ colors = [
     'blue','magenta', 'cyan','white',
     ]
 
-for fg in colors:
-    for bg in colors:
-        print_color("{} text on {} background".format(fg, bg), foreground=fg, background=bg, format='underline bold')
+#~ for fg in colors:
+    #~ for bg in colors:
+        #~ print_color("{} text on {} background".format(fg, bg), foreground=fg, background=bg, format='underline bold')
+
+fg, bg = "#FFC0CB", "#800080"
+print_color("{} text on {} background".format(fg, bg), foreground=fg, background=bg, format='strikeout italic')

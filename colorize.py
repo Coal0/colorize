@@ -52,7 +52,6 @@ FORMATS = {
 ANSI_ESCAPE_SEQ = "\033[{}m"
 ANSI_ESCAPE_SEQ_END = "\033[0m"
 
-
 def idiot_check(label, value, dictionary):
     if value:
         value = value.strip().lower()
@@ -61,6 +60,9 @@ def idiot_check(label, value, dictionary):
         raise ValueError('invalid {} color {!r}. Must be one of {}'.format(label, value, list(dictionary.keys())))
 
     return dictionary[value]
+
+def html_to_code(html):
+    return [int(html[1:3], 16), int(html[3:5], 16), int(html[5:7], 16)]
 
 def print_color(*print_args, format=None, foreground=None,
         background=None, **print_kwargs):
@@ -95,9 +97,15 @@ def print_color(*print_args, format=None, foreground=None,
     if format:
         format_codes += [idiot_check('format', x, FORMATS) for x in format.split()]
 
-    format_codes.append(idiot_check('foreground', foreground, FOREGROUNDS))
+    if foreground.startswith('#'):
+        format_codes += [38, 2] + html_to_code(foreground)
+    else:
+        format_codes.append(idiot_check('foreground', foreground, FOREGROUNDS))
 
-    format_codes.append(idiot_check('background', background, BACKGROUNDS))
+    if background.startswith('#'):
+        format_codes += [48, 2] + html_to_code(background)
+    else:
+        format_codes.append(idiot_check('background', background, BACKGROUNDS))
 
     ansi_escape_seq = ANSI_ESCAPE_SEQ.format(';'.join(map(str, format_codes)))
 
