@@ -33,3 +33,7 @@ In this call, the text is "The Knights who say Ni!" and it's formatted as
 ### Video guide
 
 [![asciicast](https://asciinema.org/a/136416.png)](https://asciinema.org/a/136416)
+
+### Sample foreground and background colors
+
+[![asciicast](https://asciinema.org/a/136768.png)](https://asciinema.org/a/136768)
