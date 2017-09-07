@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Provides a simple wrapper function of print that allows
 you to print in a different format and color.
@@ -10,6 +12,43 @@ By: Asad Moosvi
 
 import argparse
 import sys
+
+FOREGROUNDS = {
+    'black': ';30',
+    'red': ';31',
+    'green': ';32',
+    'yellow': ';33',
+    'blue': ';34',
+    'magenta': ';35',
+    'cyan': ';36',
+    'white': ';37',
+    None: ';39' # default foreground
+    }
+
+BACKGROUNDS = {
+    'black': ';40',
+    'red': ';41',
+    'green': ';42',
+    'yellow': ';43',
+    'blue': ';44',
+    'magenta': ';45',
+    'cyan': ';46',
+    'white': ';47',
+    None: ';49' # default background
+    }
+
+ANSI_ESCAPE_SEQ = "\033[{format_codes}m"
+ANSI_ESCAPE_SEQ_END = "\033[0m"
+
+
+def idiot_check(label, value, dictionary):
+    if value:
+        value = value.strip().lower()
+
+    if value not in dictionary:
+        raise ValueError('invalid {} color {!r}. Must be one of {}'.format(label, value, list(dictionary.keys())))
+
+    return value
 
 def print_color(*print_args, format=None, foreground=None,
         background=None, **print_kwargs):
@@ -54,49 +93,13 @@ def print_color(*print_args, format=None, foreground=None,
         else:
             raise ValueError('invalid format {!r}'.format(format))
 
-    # set foreground if any supplied
-    if foreground:
-        foreground = foreground.strip().lower()
-        foreground_codes = {
-            'black': ';30',
-            'red': ';31',
-            'green': ';32',
-            'yellow': ';33',
-            'blue': ';34',
-            'magenta': ';35',
-            'cyan': ';36',
-            'white': ';37'
-            }
+    foreground = idiot_check('foreground', foreground, FOREGROUNDS)
+    format_codes += FOREGROUNDS[foreground]
 
-        if foreground in foreground_codes:
-            format_codes += foreground_codes[foreground]
-        else:
-            raise ValueError('invalid foreground color {!r}'.format(foreground))
-    else:
-        format_codes += ';39' # default foreground
+    background = idiot_check('background', background, BACKGROUNDS)
+    format_codes += BACKGROUNDS[background]
 
-    # set background if any supplied
-    if background:
-        background = background.strip().lower()
-        background_codes = {
-            'black': ';40',
-            'red': ';41',
-            'green': ';42',
-            'yellow': ';43',
-            'blue': ';44',
-            'magenta': ';45',
-            'cyan': ';46',
-            'white': ';47'
-            }
-
-        if background in background_codes:
-            format_codes += background_codes[background]
-        else:
-            raise ValueError('invalid background color {!r}'.format(background))
-    else:
-        format_codes += ';49' # default background
-
-    ansi_escape_seq = ansi_escape_seq.format(format_codes=format_codes)
+    ansi_escape_seq = ANSI_ESCAPE_SEQ.format(format_codes=format_codes)
     ansi_escape_seq_end = "\033[0m"
     all_strings = [str(s) for s in print_args]
 
@@ -106,7 +109,7 @@ def print_color(*print_args, format=None, foreground=None,
     else:
         print_string = ' '.join(all_strings)
 
-    print(ansi_escape_seq + print_string + ansi_escape_seq_end, **print_kwargs)
+    print(ansi_escape_seq + print_string + ANSI_ESCAPE_SEQ_END, **print_kwargs)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='format and color text '

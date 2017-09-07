@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 from colorize import print_color
 
 colors = [
