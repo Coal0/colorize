@@ -39,9 +39,14 @@ BACKGROUNDS = {
 
 FORMATS = {
     'bold': 1,
+    'faint': 2,
+    'italic': 3,
+    'underline': 4,
     'underscore': 4,
-    'italics': 3,
-    'reverse_video': 7
+    'reverse_video': 7,
+    'strikeout': 9,
+    'frame': 51,
+    'overline': 53
 }
 
 ANSI_ESCAPE_SEQ = "\033[{}m"

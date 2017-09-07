@@ -9,5 +9,4 @@ colors = [
 
 for fg in colors:
     for bg in colors:
-        print_color("{} text on {} background".format(fg, bg), foreground=fg, background=bg, format='underscore bold')
-        print_color()
+        print_color("{} text on {} background".format(fg, bg), foreground=fg, background=bg, format='underline bold')
