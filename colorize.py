@@ -14,30 +14,37 @@ import argparse
 import sys
 
 FOREGROUNDS = {
-    'black': ';30',
-    'red': ';31',
-    'green': ';32',
-    'yellow': ';33',
-    'blue': ';34',
-    'magenta': ';35',
-    'cyan': ';36',
-    'white': ';37',
-    None: ';39' # default foreground
+    'black': 30,
+    'red': 31,
+    'green': 32,
+    'yellow': 33,
+    'blue': 34,
+    'magenta': 35,
+    'cyan': 36,
+    'white': 37,
+    None: 39 # default foreground
     }
 
 BACKGROUNDS = {
-    'black': ';40',
-    'red': ';41',
-    'green': ';42',
-    'yellow': ';43',
-    'blue': ';44',
-    'magenta': ';45',
-    'cyan': ';46',
-    'white': ';47',
-    None: ';49' # default background
+    'black': 40,
+    'red': 41,
+    'green': 42,
+    'yellow': 43,
+    'blue': 44,
+    'magenta': 45,
+    'cyan': 46,
+    'white': 47,
+    None: 49 # default background
     }
 
-ANSI_ESCAPE_SEQ = "\033[{format_codes}m"
+FORMATS = {
+    'bold': 1,
+    'underscore': 4,
+    'italics': 3,
+    'reverse_video': 7
+}
+
+ANSI_ESCAPE_SEQ = "\033[{}m"
 ANSI_ESCAPE_SEQ_END = "\033[0m"
 
 
@@ -48,7 +55,7 @@ def idiot_check(label, value, dictionary):
     if value not in dictionary:
         raise ValueError('invalid {} color {!r}. Must be one of {}'.format(label, value, list(dictionary.keys())))
 
-    return value
+    return dictionary[value]
 
 def print_color(*print_args, format=None, foreground=None,
         background=None, **print_kwargs):
@@ -75,40 +82,21 @@ def print_color(*print_args, format=None, foreground=None,
         print_color('hello world', format='bold', foreground='green')
         This prints `hello world` in bold and green foreground color.
     """
-
-    ansi_escape_seq = "\033[{format_codes}m"
-    format_codes = ''
+    sep = print_kwargs.pop('sep', ' ')
 
     # if no format/attribute is specified for the ansi escape sequence
     # then default to no attribute otherwise set the repective attribute
-    if not format:
-        format_codes += '0'
-    else:
-        if format == 'bold':
-            format_codes += '1'
-        elif format == 'underscore':
-            format_codes += '4'
-        elif format == 'reverse_video':
-            format_codes += '7'
-        else:
-            raise ValueError('invalid format {!r}'.format(format))
+    format_codes =[]
+    if format:
+        format_codes += [idiot_check('format', x, FORMATS) for x in format.split()]
 
-    foreground = idiot_check('foreground', foreground, FOREGROUNDS)
-    format_codes += FOREGROUNDS[foreground]
+    format_codes.append(idiot_check('foreground', foreground, FOREGROUNDS))
 
-    background = idiot_check('background', background, BACKGROUNDS)
-    format_codes += BACKGROUNDS[background]
+    format_codes.append(idiot_check('background', background, BACKGROUNDS))
 
-    ansi_escape_seq = ANSI_ESCAPE_SEQ.format(format_codes=format_codes)
-    ansi_escape_seq_end = "\033[0m"
-    all_strings = [str(s) for s in print_args]
+    ansi_escape_seq = ANSI_ESCAPE_SEQ.format(';'.join(map(str, format_codes)))
 
-    if 'sep' in print_kwargs:
-        print_string = print_kwargs['sep'].join(all_strings)
-        del print_kwargs['sep'] # remove sep after joining args
-    else:
-        print_string = ' '.join(all_strings)
-
+    print_string = sep.join(map(str, print_args))
     print(ansi_escape_seq + print_string + ANSI_ESCAPE_SEQ_END, **print_kwargs)
 
 if __name__ == '__main__':

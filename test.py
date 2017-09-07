@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 from colorize import print_color
 
 colors = [
@@ -10,4 +9,5 @@ colors = [
 
 for fg in colors:
     for bg in colors:
-        print_color("{} text on {} background".format(fg, bg), foreground=fg, background=bg, format='bold')
+        print_color("{} text on {} background".format(fg, bg), foreground=fg, background=bg, format='underscore bold')
+        print_color()
