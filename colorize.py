@@ -13,7 +13,7 @@ By: Asad Moosvi
 import argparse
 import sys
 
-FOREGROUNDS = {
+COLORS = {
     'black': 30,
     'red': 31,
     'green': 32,
@@ -23,18 +23,6 @@ FOREGROUNDS = {
     'cyan': 36,
     'white': 37,
     None: 39 # default foreground
-    }
-
-BACKGROUNDS = {
-    'black': 40,
-    'red': 41,
-    'green': 42,
-    'yellow': 43,
-    'blue': 44,
-    'magenta': 45,
-    'cyan': 46,
-    'white': 47,
-    None: 49 # default background
     }
 
 FORMATS = {
@@ -52,17 +40,16 @@ FORMATS = {
 ANSI_ESCAPE_SEQ = "\033[{}m"
 ANSI_ESCAPE_SEQ_END = "\033[0m"
 
-def idiot_check(label, value, dictionary):
+def idiot_check(label, value, dictionary, add=0):
     if value:
         value = value.strip().lower()
 
+    if value.startswith('#'):
+        return [38+add, 2, int(value[1:3], 16), int(value[3:5], 16), int(value[5:7], 16)]
     if value not in dictionary:
         raise ValueError('invalid {} color {!r}. Must be one of {}'.format(label, value, list(dictionary.keys())))
+    return [dictionary[value]+add]
 
-    return dictionary[value]
-
-def html_to_code(html):
-    return [int(html[1:3], 16), int(html[3:5], 16), int(html[5:7], 16)]
 
 def print_color(*print_args, format=None, foreground=None,
         background=None, **print_kwargs):
@@ -95,17 +82,11 @@ def print_color(*print_args, format=None, foreground=None,
     # then default to no attribute otherwise set the repective attribute
     format_codes =[]
     if format:
-        format_codes += [idiot_check('format', x, FORMATS) for x in format.split()]
+        format_codes += sum((idiot_check('format', x, FORMATS) for x in format.split()), [])
 
-    if foreground.startswith('#'):
-        format_codes += [38, 2] + html_to_code(foreground)
-    else:
-        format_codes.append(idiot_check('foreground', foreground, FOREGROUNDS))
+    format_codes += idiot_check('foreground', foreground, COLORS)
 
-    if background.startswith('#'):
-        format_codes += [48, 2] + html_to_code(background)
-    else:
-        format_codes.append(idiot_check('background', background, BACKGROUNDS))
+    format_codes += idiot_check('background', background, COLORS, add=10)
 
     ansi_escape_seq = ANSI_ESCAPE_SEQ.format(';'.join(map(str, format_codes)))
 
