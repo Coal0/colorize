@@ -9,6 +9,7 @@ the background color of text when printing.
 
 By: Asad Moosvi
 """
+from __future__ import print_function
 
 import argparse
 import sys
@@ -51,8 +52,7 @@ def idiot_check(label, value, dictionary, add=0):
     return [dictionary[value]+add]
 
 
-def print_color(*print_args, format=None, foreground=None,
-        background=None, **print_kwargs):
+def print_color(*print_args, **kwargs):
     """A wrapper around the print function used for printing with different
     format, foreground, and background options.
 
@@ -76,7 +76,10 @@ def print_color(*print_args, format=None, foreground=None,
         print_color('hello world', format='bold', foreground='green')
         This prints `hello world` in bold and green foreground color.
     """
-    sep = print_kwargs.pop('sep', ' ')
+    sep = kwargs.pop('sep', ' ')
+    format = kwargs.pop('format', None)
+    background = kwargs.pop('background', None)
+    foreground = kwargs.pop('foreground', None)
 
     # if no format/attribute is specified for the ansi escape sequence
     # then default to no attribute otherwise set the repective attribute
@@ -91,7 +94,7 @@ def print_color(*print_args, format=None, foreground=None,
     ansi_escape_seq = ANSI_ESCAPE_SEQ.format(';'.join(map(str, format_codes)))
 
     print_string = sep.join(map(str, print_args))
-    print(ansi_escape_seq + print_string + ANSI_ESCAPE_SEQ_END, **print_kwargs)
+    print(ansi_escape_seq + print_string + ANSI_ESCAPE_SEQ_END, **kwargs)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='format and color text '
